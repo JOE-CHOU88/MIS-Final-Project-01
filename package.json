@@ -1,0 +1,24 @@
+{
+  "name": "mis_final_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JOE-CHOU88/MIS-Final-Project-01.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.17.1"
+  },
+  "bugs": {
+    "url": "https://github.com/JOE-CHOU88/MIS-Final-Project-01/issues"
+  },
+  "homepage": "https://github.com/JOE-CHOU88/MIS-Final-Project-01#readme"
+}
