@@ -38,7 +38,3 @@ output .image span:hover {
 output .span--hidden {
   visibility: hidden;
 }
-
-/* button[id="confirmB"] {
-  display: none;
-} */

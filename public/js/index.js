@@ -1,8 +1,10 @@
 const input = document.querySelector("input");
 const output = document.querySelector("output");
 const confirmWords = document.getElementById("confirmP");
-const confirmButton = document.getElementById("confirmB");
-confirmButton.style.visibility = "hidden";
+const confirmA = document.getElementById("confirmA");
+const confirmBtn = document.getElementById("confirmBtn");
+confirmA.style.visibility = "hidden";
+confirmBtn.style.visibility = "hidden";
 let image = "";
 
 input.addEventListener("change", () => {
@@ -10,9 +12,10 @@ input.addEventListener("change", () => {
   image = file[0];
   console.log(file[0]);
   displayImages();
-  confirmWords.innerHTML += `請確認您上傳的圖檔是否有誤`;
-  confirmButton.style.visibility = "visible";
-  confirmButton.innerHTML += `確認`;
+  confirmWords.innerHTML = `請確認您上傳的圖檔是否有誤`;
+  confirmA.style.visibility = "visible";
+  confirmBtn.style.visibility = "visible";
+  confirmA.innerHTML = `確認`;
 });
 
 function displayImages() {
@@ -20,4 +23,8 @@ function displayImages() {
                   <img src="${URL.createObjectURL(image)}" alt="image">
                 </div>`;
   output.innerHTML = imageContent;
+}
+
+function gotoResultPage() {
+  alert("Hi");
 }
