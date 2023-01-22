@@ -16,3 +16,4 @@ app.set("view engine", "ejs");
 
 app.listen(3000);
 // http://localhost:3000/
+// http://localhost:3000/result

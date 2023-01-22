@@ -24,7 +24,3 @@ function displayImages() {
                 </div>`;
   output.innerHTML = imageContent;
 }
-
-function gotoResultPage() {
-  alert("Hi");
-}
