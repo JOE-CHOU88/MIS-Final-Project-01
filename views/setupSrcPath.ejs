@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>設置起始位置</title>
+  </head>
+  <body>
+    <p>請設置起始位置</p>
+    <p>Please setup your source location</p>
+    <video autoplay="true" id="videoElement"></video><br />
+    <button id="openBtn" onclick="start()">Open Camera to take picture</button>
+    <button id="snapBtn" onClick="take_snapshot()">Take Snapshot</button>
+    <button id="stopBtn" onclick="stop()">Stop</button>
+    <button id="resumeBtn" onclick="resume()">Resume</button>
+    <div id="resultPic"></div>
+    <p id="confirmP"></p>
+    <button id="confirmBtn">
+      <a id="confirmA" href="/srcPathDisplay"></a>
+    </button>
+  </body>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
+  ></script>
+  <script src="./js/setupSrcPath.js"></script>
+</html>
