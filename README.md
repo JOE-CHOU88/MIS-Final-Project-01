@@ -6,4 +6,6 @@
 (Credit: https://github.com/UB-Mannheim/tesseract/wiki)
 4. 執行時在terminal端跑”npm run devStart"，並在網頁開啟http://localhost:3000/ 
 
+偶爾遇到的問題：
+
 If you encounter "Cannot find module 'express'" error, you can run "npm install --save express" in terminal
