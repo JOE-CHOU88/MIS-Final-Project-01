@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>設置起始位置</title>
   </head>
+
   <body>
     <p>請設置起始位置</p>
     <p>Please setup your source location</p>
+    <p>方法一：請拍攝 unique 指標，系統將會自動辨識平面圖中的起始位置</p>
     <video autoplay="true" id="videoElement"></video><br />
     <button id="openBtn" onclick="start()">Open Camera to take picture</button>
     <button id="snapBtn" onClick="take_snapshot()">Take Snapshot</button>
@@ -19,10 +21,23 @@
     <button id="confirmBtn">
       <a id="confirmA" href="/srcPathDisplay"></a>
     </button>
+    <p>方法二：請選擇起始位置</p>
+    <select class="srcLocation">
+      <option>請選擇你最愛的寵物</option>
+      <option>Dog</option>
+      <option>Cat</option>
+      <option>Hamster</option>
+      <option>Parrot</option>
+      <option>Spider</option>
+      <option>Goldfish</option></select
+    ><br />
+    <button id="confirmBtn2" onclick="after_snap()">
+      <a id="confirmA2" href="/srcPathDisplay"></a>
+    </button>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
+    ></script>
+    <script src="./js/src/setupSrcPath.js"></script>
   </body>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
-  ></script>
-  <script src="./js/setupSrcPath.js"></script>
 </html>

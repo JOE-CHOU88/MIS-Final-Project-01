@@ -1,17 +1,16 @@
 const express = require("express");
-const router = express.Router();
+const indexRouter = express.Router();
 
-router.get("/", (req, res) => {
+indexRouter.get("/", (req, res) => {
   res.render("index");
 });
 
-router.get("/setupSrcPath", (req, res, next) => {
+indexRouter.get("/setupSrcPath", (req, res, next) => {
   res.render("setupSrcPath");
 });
 
-router.get("/srcPathDisplay", (req, res, next) => {
-  console.log("Hi");
+indexRouter.get("/srcPathDisplay", (req, res, next) => {
   res.render("srcPathDisplay");
 });
 
-module.exports = router;
+module.exports = indexRouter;
