@@ -10,17 +10,26 @@
   <body>
     <p>請設置起始位置</p>
     <p>Please setup your source location</p>
+    <hr />
     <p>方法一：請拍攝 unique 指標，系統將會自動辨識平面圖中的起始位置</p>
     <video autoplay="true" id="videoElement"></video><br />
-    <button id="openBtn" onclick="start()">Open Camera to take picture</button>
-    <button id="snapBtn" onClick="take_snapshot()">Take Snapshot</button>
-    <button id="stopBtn" onclick="stop()">Stop</button>
-    <button id="resumeBtn" onclick="resume()">Resume</button>
+    <button id="openBtn">Open Camera to take picture</button>
+    <button id="snapBtn">Take Snapshot</button>
+    <button id="stopBtn">Stop</button>
+    <button id="resumeBtn">Resume</button>
     <div id="resultPic"></div>
     <p id="confirmP"></p>
     <button id="confirmBtn">
-      <a id="confirmA" href="/srcPathDisplay"></a>
+      <a id="confirmA"></a>
     </button>
+    <!-- href="/srcPathDisplay" -->
+    <label id="analyzeLabel">Analyzing progress:</label>
+    <progress max="1">0</progress>
+    <button id="finalConfirmBtn">
+      <a id="finalConfirmA" href="/srcPathDisplay">下一頁</a>
+    </button>
+    <p id="txtOCRResult"></p>
+    <hr />
     <p>方法二：請選擇起始位置</p>
     <select class="srcLocation">
       <option>請選擇你最愛的寵物</option>
@@ -31,13 +40,13 @@
       <option>Spider</option>
       <option>Goldfish</option></select
     ><br />
-    <button id="confirmBtn2" onclick="after_snap()">
+    <button id="confirmBtn2">
       <a id="confirmA2" href="/srcPathDisplay"></a>
     </button>
     <script
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
     ></script>
-    <script src="./js/src/setupSrcPath.js"></script>
+    <script src="./js/dist/setupSrcPath.js"></script>
   </body>
 </html>

@@ -10,7 +10,13 @@
     <input type="file" accept="image/jpeg, image/png, image/jpg" />
     <output></output>
     <p id="confirmP"></p>
-    <button id="confirmBtn"><a id="confirmA" href="/setupSrcPath"></a></button>
+    <button id="confirmBtn"><a id="confirmA"></a></button>
+    <label id="analyzeLabel">Analyzing progress:</label>
+    <progress max="1">0</progress>
+    <button id="finalConfirmBtn">
+      <a id="finalConfirmA" href="/setupSrcPath">下一頁</a>
+    </button>
+    <p id="txtOCRResult"></p>
     <link rel="stylesheet" href="./css/index.css" />
     <script src="./js/dist/index.js"></script>
   </body>

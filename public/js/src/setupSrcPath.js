@@ -7,6 +7,12 @@ const resultPic = document.getElementById("resultPic");
 const confirmWords = document.getElementById("confirmP");
 const confirmA = document.getElementById("confirmA");
 const confirmBtn = document.getElementById("confirmBtn");
+const progressWords = document.getElementById("analyzeLabel");
+const progress = document.querySelector("progress");
+const finalconfirmA = document.getElementById("finalConfirmA");
+const finalconfirmBtn = document.getElementById("finalConfirmBtn");
+const txtOutput = document.getElementById("txtOCRResult");
+
 const select = document.querySelector(".srcLocation");
 const confirmA2 = document.getElementById("confirmA2");
 const confirmBtn2 = document.getElementById("confirmBtn2");
@@ -15,6 +21,10 @@ let img_uri;
 confirmWords.style.display = "none";
 confirmA.style.visibility = "hidden";
 confirmBtn.style.visibility = "hidden";
+progressWords.style.visibility = "hidden";
+progress.style.visibility = "hidden";
+finalconfirmA.style.visibility = "hidden";
+finalconfirmBtn.style.visibility = "hidden";
 video.style.display = "none";
 openBtn.style.visibility = "visible";
 snapBtn.style.visibility = "hidden";
@@ -37,14 +47,48 @@ Webcam.attach("#videoElement");
 var shutter = new Audio();
 shutter.autoplay = true;
 
+openBtn.addEventListener("click", () => {
+  start();
+});
+
+snapBtn.addEventListener("click", () => {
+  take_snapshot();
+});
+
+stopBtn.addEventListener("click", () => {
+  stop();
+});
+
+resumeBtn.addEventListener("click", () => {
+  resume();
+});
+
+confirmBtn.addEventListener("click", () => {
+  progressWords.style.visibility = "visible";
+  progress.style.visibility = "visible";
+  // analyze image using tesseract.js
+  const tesseract = require("tesseract.js");
+  tesseract
+    .recognize(img_uri, "eng", {
+      logger: (m) => {
+        console.log(m);
+        if (m.status === "recognizing text") {
+          progress.value = m.progress;
+        }
+      },
+    })
+    .then(({ data: { text } }) => {
+      console.log(text);
+      txtOutput.innerHTML = text;
+      finalconfirmA.style.visibility = "visible";
+      finalconfirmBtn.style.visibility = "visible";
+    });
+});
+
 select.addEventListener("change", () => {
   confirmA2.style.visibility = "visible";
   confirmBtn2.style.visibility = "visible";
   confirmA2.innerHTML = `確認`;
-});
-
-confirmBtn.addEventListener("click", () => {
-  alert(img_uri);
 });
 
 function start() {

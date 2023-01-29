@@ -17,7 +17,8 @@
     "animejs": "^3.2.1",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
-    "node-tesseract-ocr": "^2.2.1"
+    "node-tesseract-ocr": "^2.2.1",
+    "tesseract.js": "^4.0.2"
   },
   "bugs": {
     "url": "https://github.com/JOE-CHOU88/MIS-Final-Project-01/issues"

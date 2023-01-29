@@ -3,17 +3,19 @@ const output = document.querySelector("output");
 const confirmWords = document.getElementById("confirmP");
 const confirmA = document.getElementById("confirmA");
 const confirmBtn = document.getElementById("confirmBtn");
+const progressWords = document.getElementById("analyzeLabel");
+const progress = document.querySelector("progress");
+const finalconfirmA = document.getElementById("finalConfirmA");
+const finalconfirmBtn = document.getElementById("finalConfirmBtn");
+const txtOutput = document.getElementById("txtOCRResult");
+
 confirmA.style.visibility = "hidden";
 confirmBtn.style.visibility = "hidden";
+progressWords.style.visibility = "hidden";
+progress.style.visibility = "hidden";
+finalconfirmA.style.visibility = "hidden";
+finalconfirmBtn.style.visibility = "hidden";
 let image = "";
-
-const tesseract = require("node-tesseract-ocr");
-// import { recognize } from "/node-tesseract-ocr";
-const config = {
-  lang: "eng",
-  oem: 1,
-  psm: 3,
-};
 
 input.addEventListener("change", () => {
   const file = input.files;
@@ -27,13 +29,23 @@ input.addEventListener("change", () => {
 });
 
 confirmBtn.addEventListener("click", () => {
+  progressWords.style.visibility = "visible";
+  progress.style.visibility = "visible";
+  const tesseract = require("tesseract.js");
   tesseract
-    .recognize("image.png", config)
-    .then((text) => {
-      alert(text);
+    .recognize(image, "eng", {
+      logger: (m) => {
+        console.log(m);
+        if (m.status === "recognizing text") {
+          progress.value = m.progress;
+        }
+      },
     })
-    .catch((error) => {
-      console.log(error.message);
+    .then(({ data: { text } }) => {
+      console.log(text);
+      txtOutput.innerHTML = text;
+      finalconfirmA.style.visibility = "visible";
+      finalconfirmBtn.style.visibility = "visible";
     });
 });
 
