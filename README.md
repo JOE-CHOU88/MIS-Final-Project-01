@@ -10,7 +10,7 @@
 
 *小提醒2：修改環境變數（詳情請見https://www.youtube.com/watch?v=Rb93uLXiTwA 4:15處），修改完 VS Code 需重新啟動!
 
-4. 在cmd跑"pip install pytesseract"
+4. 在cmd跑"pip install pytesseract"、"pip install Pillow"
 5. 執行時在terminal端跑”npm run devStart"，並在網頁開啟http://localhost:3000/ 
 
 偶爾遇到的問題：
