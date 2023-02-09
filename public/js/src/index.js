@@ -1,3 +1,5 @@
+const FormData = require("form-data");
+
 const input = document.querySelector("input");
 const output = document.querySelector("output");
 const confirmWords = document.getElementById("confirmP");
@@ -15,7 +17,9 @@ progressWords.style.visibility = "hidden";
 progress.style.visibility = "hidden";
 finalconfirmA.style.visibility = "hidden";
 finalconfirmBtn.style.visibility = "hidden";
-let image = "";
+let image;
+let blob_image_uri;
+let https_image_uri;
 
 input.addEventListener("change", () => {
   const file = input.files;
@@ -28,30 +32,49 @@ input.addEventListener("change", () => {
   confirmA.innerHTML = `確認`;
 });
 
-confirmBtn.addEventListener("click", () => {
+confirmBtn.addEventListener("click", async () => {
   progressWords.style.visibility = "visible";
   progress.style.visibility = "visible";
-  const tesseract = require("tesseract.js");
-  tesseract
-    .recognize(image, "eng", {
-      logger: (m) => {
-        console.log(m);
-        if (m.status === "recognizing text") {
-          progress.value = m.progress;
-        }
-      },
-    })
-    .then(({ data: { text } }) => {
-      console.log(text);
-      txtOutput.innerHTML = text;
-      finalconfirmA.style.visibility = "visible";
-      finalconfirmBtn.style.visibility = "visible";
-    });
+
+  console.log(45, input.files[0]);
+
+  await uploadImagetoFirebase();
+  console.log(51, https_image_uri);
+  await urlSendtoPythonAnalsis();
+
+  finalconfirmA.style.visibility = "visible";
+  finalconfirmBtn.style.visibility = "visible";
 });
 
 function displayImages() {
+  blob_image_uri = URL.createObjectURL(image);
   let imageContent = `<div class="image">
-                  <img src="${URL.createObjectURL(image)}" alt="image">
+                  <img src="${blob_image_uri}" alt="image">
                 </div>`;
   output.innerHTML = imageContent;
+}
+
+async function uploadImagetoFirebase() {
+  const data = new FormData();
+  data.append("file", image);
+  await axios
+    .post("/upload", data)
+    .then((res) => {
+      https_image_uri = res.data.imageUrl;
+    })
+    .catch((err) => {
+      console.log("錯誤", err.response.data);
+    });
+}
+
+async function urlSendtoPythonAnalsis() {
+  await axios
+    .post("/api/index-img-analysis", { url: https_image_uri })
+    .then((res) => {
+      console.log(res.data.result);
+      txtOutput.innerHTML = res.data.result;
+    })
+    .catch((err) => {
+      console.log("錯誤", err);
+    });
 }

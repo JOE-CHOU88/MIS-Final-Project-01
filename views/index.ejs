@@ -4,13 +4,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
     <title>上傳圖檔</title>
   </head>
   <body>
-    <input type="file" accept="image/jpeg, image/png, image/jpg" />
+    <input
+      id="select-files"
+      type="file"
+      accept="image/jpeg, image/png, image/jpg"
+    />
     <output></output>
     <p id="confirmP"></p>
-    <button id="confirmBtn"><a id="confirmA"></a></button>
+    <button id="confirmBtn">
+      <a id="confirmA"></a>
+    </button>
     <label id="analyzeLabel">Analyzing progress:</label>
     <progress max="1">0</progress>
     <button id="finalConfirmBtn">
@@ -18,6 +25,11 @@
     </button>
     <p id="txtOCRResult"></p>
     <link rel="stylesheet" href="./css/index.css" />
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
     <script src="./js/dist/index.js"></script>
+    <!-- %- include ('./shared/dbConfig-scripts'); %> -->
   </body>
 </html>
