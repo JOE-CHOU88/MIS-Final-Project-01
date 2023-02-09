@@ -11,9 +11,8 @@
 *小提醒2：修改環境變數（詳情請見https://www.youtube.com/watch?v=Rb93uLXiTwA 4:15處），修改完 VS Code 需重新啟動!
 
 4. 在cmd跑"pip install pytesseract"、"pip install Pillow"、"pip install requests"
-5. 修改 .env 檔資訊（待補）：\
-(1) 將 .env-example 檔名改為 .env\
-(2) 
+5. 修改 .env 檔資訊：\
+(1) 將 .env-example 檔名改為 .env
 6. 執行時在terminal端跑”npm run devStart"，並在網頁開啟http://localhost:3000/ 
 
 偶爾遇到的問題：
