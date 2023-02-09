@@ -38,9 +38,35 @@ confirmBtn.addEventListener("click", async () => {
 
   console.log(45, input.files[0]);
 
-  await uploadImagetoFirebase();
+  const config1 = {
+    onUploadProgress: function (progressEvent) {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded / progressEvent.total) * 100
+      );
+      progress.setAttribute("value", percentCompleted);
+      progress.previousElementSibling.textContent = `${percentCompleted}%`;
+      if (percentCompleted === 100) {
+        progress.previousElementSibling.textContent = `Upload complete!`;
+      }
+    },
+  };
+  await uploadImagetoFirebase(config1);
+
   console.log(51, https_image_uri);
-  await urlSendtoPythonAnalsis();
+
+  const config2 = {
+    onUploadProgress: function (progressEvent) {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded / progressEvent.total) * 100
+      );
+      progress.setAttribute("value", percentCompleted);
+      progress.previousElementSibling.textContent = `${percentCompleted}%`;
+      if (percentCompleted === 100) {
+        progress.previousElementSibling.textContent = `Analyze complete!`;
+      }
+    },
+  };
+  await urlSendtoPythonAnalsis(config2);
 
   finalconfirmA.style.visibility = "visible";
   finalconfirmBtn.style.visibility = "visible";
@@ -54,11 +80,11 @@ function displayImages() {
   output.innerHTML = imageContent;
 }
 
-async function uploadImagetoFirebase() {
+async function uploadImagetoFirebase(config) {
   const data = new FormData();
   data.append("file", image);
   await axios
-    .post("/upload", data)
+    .post("/upload", data, config)
     .then((res) => {
       https_image_uri = res.data.imageUrl;
     })
@@ -67,9 +93,9 @@ async function uploadImagetoFirebase() {
     });
 }
 
-async function urlSendtoPythonAnalsis() {
+async function urlSendtoPythonAnalsis(config) {
   await axios
-    .post("/api/index-img-analysis", { url: https_image_uri })
+    .post("/api/index-img-analysis", { url: https_image_uri }, config)
     .then((res) => {
       console.log(res.data.result);
       txtOutput.innerHTML = res.data.result;

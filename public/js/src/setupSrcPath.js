@@ -16,7 +16,9 @@ const txtOutput = document.getElementById("txtOCRResult");
 const select = document.querySelector(".srcLocation");
 const confirmA2 = document.getElementById("confirmA2");
 const confirmBtn2 = document.getElementById("confirmBtn2");
-let img_uri;
+let data_image_uri;
+let buffer;
+let https_image_uri;
 
 confirmWords.style.display = "none";
 confirmA.style.visibility = "hidden";
@@ -63,26 +65,45 @@ resumeBtn.addEventListener("click", () => {
   resume();
 });
 
-confirmBtn.addEventListener("click", () => {
+confirmBtn.addEventListener("click", async () => {
   progressWords.style.visibility = "visible";
   progress.style.visibility = "visible";
-  // analyze image using tesseract.js
-  const tesseract = require("tesseract.js");
-  tesseract
-    .recognize(img_uri, "eng", {
-      logger: (m) => {
-        console.log(m);
-        if (m.status === "recognizing text") {
-          progress.value = m.progress;
-        }
-      },
-    })
-    .then(({ data: { text } }) => {
-      console.log(text);
-      txtOutput.innerHTML = text;
-      finalconfirmA.style.visibility = "visible";
-      finalconfirmBtn.style.visibility = "visible";
-    });
+
+  console.log(70, data_image_uri);
+
+  // buffer = new Buffer(data_image_uri.split(",")[1], "base64");
+  // console.log(buffer);
+
+  const config1 = {
+    onUploadProgress: function (progressEvent) {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded / progressEvent.total) * 100
+      );
+      progress.setAttribute("value", percentCompleted);
+      progress.previousElementSibling.textContent = `${percentCompleted}%`;
+      if (percentCompleted === 100) {
+        progress.previousElementSibling.textContent = `Upload complete!`;
+      }
+    },
+  };
+  await uploadImagetoFirebase(config1);
+
+  const config2 = {
+    onUploadProgress: function (progressEvent) {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded / progressEvent.total) * 100
+      );
+      progress.setAttribute("value", percentCompleted);
+      progress.previousElementSibling.textContent = `${percentCompleted}%`;
+      if (percentCompleted === 100) {
+        progress.previousElementSibling.textContent = `Analyze complete!`;
+      }
+    },
+  };
+  await urlSendtoPythonAnalsis(config2);
+
+  finalconfirmA.style.visibility = "visible";
+  finalconfirmBtn.style.visibility = "visible";
 });
 
 select.addEventListener("change", () => {
@@ -155,7 +176,7 @@ function take_snapshot() {
   Webcam.snap(function (data_uri) {
     // By getting data_uri, you can access the image you just captured!!!
     console.log(data_uri);
-    img_uri = data_uri;
+    data_image_uri = data_uri;
     // display results in page
     resultPic.innerHTML = '<img src="' + data_uri + '"/>';
   });
@@ -165,3 +186,76 @@ function take_snapshot() {
   confirmBtn.style.visibility = "visible";
   confirmA.innerHTML = `確認`;
 }
+
+async function uploadImagetoFirebase(config) {
+  const blob = dataURItoBlob(data_image_uri);
+  const file = new File([blob], "snap.jpg");
+  const data = new FormData();
+  data.append("file", file);
+  await axios
+    .post("/setupSrcPath/upload", data, config)
+    .then((res) => {
+      https_image_uri = res.data.imageUrl;
+    })
+    .catch((err) => {
+      console.log("錯誤", err.response.data);
+    });
+}
+
+async function urlSendtoPythonAnalsis(config) {
+  await axios
+    .post("/api/setupSrcPath-img-analysis", { url: https_image_uri }, config)
+    .then((res) => {
+      console.log(res.data.result);
+      txtOutput.innerHTML = res.data.result;
+    })
+    .catch((err) => {
+      console.log("錯誤", err);
+    });
+}
+
+function dataURItoBlob(dataURI) {
+  // convert base64 to raw binary data held in a string
+  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+  var byteString = atob(dataURI.split(",")[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+  // write the bytes of the string to an ArrayBuffer
+  var ab = new ArrayBuffer(byteString.length);
+  var ia = new Uint8Array(ab);
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ab], { type: mimeString });
+}
+
+// /**
+//  * Converts data URI in 'image/png' format to an image data object
+//  * @param dataURL Base64 encoded string
+//  * @returns {ImageData/undefined}
+//  */
+// function convertDataURLToImageData(dataURL) {
+//   if (dataURL !== undefined && dataURL !== null) {
+//     var canvas, context, image, imageData;
+//     canvas = document.createElement("canvas");
+//     canvas.width = 540;
+//     canvas.height = 400;
+//     context = canvas.getContext("2d");
+//     image = new Image();
+
+//     image.addEventListener(
+//       "load",
+//       function () {
+//         context.drawImage(image, 0, 0, canvas.width, canvas.height);
+//         imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+//         //how do i return this?
+//       },
+//       false
+//     );
+//     image.src = dataURL;
+
+//     return imageData;
+//   }
+// }

@@ -10,6 +10,8 @@ const cors = require("cors");
 const indexRouter = require("./routes/index");
 // 引用./routes/api.js作為apiRouter
 const apiRouter = require("./routes/api");
+// 引用./routes/setupSrcPath.js作為setupSrcPathRouter
+const setupSrcPathRouter = require("./routes/setupSrcPath");
 
 var app = express();
 
@@ -35,6 +37,8 @@ app.use("/python", express.static(path.join(__dirname, "python")));
 app.use("/", indexRouter);
 // 指派apiRouter負責處理 /api 路由的邏輯
 app.use("/api", apiRouter);
+// 指派setupSrcPathRouter負責處理 /setupSrcPath 路由的邏輯
+app.use("/setupSrcPath", setupSrcPathRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
