@@ -1,8 +1,13 @@
 # MIS-Final-Project-01
-載下GitHub專案後要做的事：
+載下GitHub專案後要做的事：（每次）
 1. 在terminal端跑”npm i”，安裝node_modules裡所有的資料
-2. 在Extension安裝EJS language support
-3. Download Tesseract installer for Windows: https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.0.20221222.exe
+2. 修改 .env 檔資訊：\
+(1) 將 .env-example 檔名改為 .env
+3. 執行時在terminal端跑”npm run devStart"，並在網頁開啟http://localhost:3000/ 
+
+載下GitHub專案後要做的事：（僅第一次）
+1. 在Extension安裝EJS language support
+2. Download Tesseract installer for Windows: https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.0.20221222.exe
 (Credit: https://github.com/UB-Mannheim/tesseract/wiki)
 
 *小提醒1：安裝時請勾選 Additional language data (download)（如下圖），否則無法解析英文以外的語言
@@ -10,10 +15,7 @@
 
 *小提醒2：修改環境變數（詳情請見https://www.youtube.com/watch?v=Rb93uLXiTwA 4:15處），修改完 VS Code 需重新啟動!
 
-4. 在cmd跑"pip install pytesseract"、"pip install Pillow"、"pip install requests"
-5. 修改 .env 檔資訊：\
-(1) 將 .env-example 檔名改為 .env
-6. 執行時在terminal端跑”npm run devStart"，並在網頁開啟http://localhost:3000/ 
+3. 在cmd跑"pip install pytesseract"、"pip install Pillow"、"pip install requests"
 
 偶爾遇到的問題：
 
